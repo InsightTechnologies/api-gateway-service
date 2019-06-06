@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.miracle.exception.APIExceptionResponse;
-import com.miracle.exception.GatewayServiceException;
+import com.miracle.exception.APIFrameworkException;
 
 
 @ControllerAdvice(basePackages = {"com.miracle.gateway"})
@@ -22,7 +22,7 @@ private APIExceptionResponse exceptionMessage;
 	
 	@ExceptionHandler({Exception.class})
 	public ResponseEntity<APIExceptionResponse> handle(Exception exception,HttpServletRequest httpServletRequest){
-		exceptionMessage.setErrorCode(((GatewayServiceException)exception).getErrorCode(exception, exceptionMessage));
+		exceptionMessage.setErrorCode(((APIFrameworkException)exception).getErrorCode(exception, exceptionMessage));
 		exceptionMessage.setErrorDescription(exception.getLocalizedMessage());
 		exceptionMessage.setTimestamp(Instant.now());
 		exceptionMessage.setStackTraceElement(exception.getStackTrace()[0]);
